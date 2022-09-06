@@ -3,7 +3,7 @@ import os
 from pymongo import MongoClient
 import time
 import re
-from datetime import datetime
+import datetime
 
 
 def main():
@@ -41,14 +41,16 @@ def main():
 
                         extension = file.split(".")[-1]
                         path = os.path.join(dirpath, file)
-                        date = time.ctime(os.path.getctime(path))
+                        date = os.path.getctime(path)
+                        date = datetime.datetime.fromtimestamp(date)
+                        # date = date.strftime("%d %m %Y, %H:%M")
                         size = os.stat(path).st_size / (1024 * 1024)
                         jsonArr.append({
                             'hostname': hostname[0],
                             'backupType': backupType,
                             'extension': extension,
                             'size_MB': size,
-                            'date': date,
+                            'date':  date,
                             'path': path,
                         })
                         # print(jsonArr)
