@@ -2,8 +2,8 @@ mongodb:
     host: 10.142.11.22
     port: 27017
     dbname: django
-    table: backup_log
-    table_error: backup_error
+    table: backups_log
+    table_error: backups_error
 
 locations:
     path:

@@ -51,6 +51,7 @@ def main():
                             'date': date,
                             'path': path,
                         })
+                        # print(jsonArr)
                     else:
                         continue
     except:
