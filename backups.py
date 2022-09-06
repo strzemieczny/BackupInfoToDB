@@ -19,19 +19,25 @@ def main():
                     # print(i)
                     if file.lower().endswith('.tib') or file.lower().endswith('.tibx'):
                         if file.lower().endswith('.tibx'):
-                            # FTPXI36-23C4870E-3CC0-46ED-AA8E-696CD921F27E-9C78F653-42F2-44B2-8E08-68C48A6A14ADA-0004.tibx
                             backupType = "Cyber Protect"
-                            pattern = "[-]\w\w\w\w\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w\w\w\w\w\w\w\w\w[-]\w\w\w\w\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w\w\w\w\w\w\w\w\w\w[-]"
-                            pattern2 = "[-]\w\w\w\w\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w\w\w\w\w\w\w\w\w[-]\w\w\w\w\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w\w\w\w\w\w\w\w\w\w"
-                            if re.split(pattern, file):
+                            pattern = re.compile(
+                                "[-]\w\w\w\w\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w\w\w\w\w\w\w\w\w[-]\w\w\w\w\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w[-]\w\w\w\w\w\w\w\w\w\w\w\w\w[-]")
+                            pattern2 = re.compile("[-]\w\w\w\w\w\w\w\w[-]")
+                            pattern3 = re.compile("[-][0-9]{4}[.]")
+                            if pattern.match(file):
                                 hostname = re.split(pattern, file)
-                            if re.split(pattern2, file):
+                                # print(hostname)
+                            elif pattern2.match(file):
                                 hostname = re.split(pattern2, file)
-
+                                # print(hostname)
+                            elif pattern3.match(file):
+                                hostname = re.split(pattern3, file)
+                                # print(hostname)
                         else:
-                            pattern = "[_][a-z]{3,4}[_][b][0-9]{1,2}[_][s][0-9][_][v][0-9]"
-                            hostname = re.split(pattern, file)
                             backupType = "True Image"
+                            pattern = re.compile(
+                                "[_][a-z]{3,4}[_][b][0-9]{1,2}[_][s][0-9]{0,2}[_][v][0-9]")
+                            hostname = re.split(pattern, file)
 
                         extension = file.split(".")[-1]
                         path = os.path.join(dirpath, file)
